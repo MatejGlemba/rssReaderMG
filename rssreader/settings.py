@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-ALLOWED_HOSTS = [‘*’]
+ALLOWED_HOSTS = ['*']
 
 WSGI_APPLICATION = 'rssreader.wsgi.application'
 
