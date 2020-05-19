@@ -4,7 +4,9 @@ from collections import OrderedDict
 from operator import itemgetter
 from datetime import datetime
 import feedparser
+from htmlmin.decorators import minified_response
 
+@minified_response
 def index(request):
     if request.GET.get("url"):
         url = request.GET["url"]
@@ -19,6 +21,7 @@ def index(request):
         feed = None
     return render(request, 'rss/feeds.html', { 'feed' : feed, })
 
+@minified_response
 def sort_a(request):
     url = request.session['url']
     feed = feedparser.parse(url)
@@ -35,7 +38,7 @@ def sort_a(request):
     feed['entries'] = tempEntries
     return render(request, 'rss/feeds.html', { 'feed' : feed, })
 
-
+@minified_response
 def sort_d(request):
     url = request.session['url']
     feed = feedparser.parse(url)
