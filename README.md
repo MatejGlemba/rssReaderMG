@@ -14,4 +14,3 @@ Je možné sortovať podľa dátumu. Pokiaľ sortovanie nespraví nič, tak potr
 Stránka prešla W3C validátorom (Je to znázornené aj vo videu)
 
 Stránka je responzívna (takisto to je vo videu)
->>>>>>> 8e7537f... Initial commit
