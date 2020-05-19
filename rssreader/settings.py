@@ -25,7 +25,7 @@ SECRET_KEY = '-hb^s88-$*^n&e@znnj3dz1mui*u66e)fj3v(yc046_s^lumgv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [
     "/rss_reader-master/static",
@@ -80,9 +80,21 @@ WSGI_APPLICATION = 'rssreader.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+  #  'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+  #      'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+  #  }
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'admin_rss@rss-postgres',
+        'PASSWORD': 'LIfdsk31*',
+        'HOST': 'rss-postgres.postgres.database.azure.com',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        }
     }
 }
 
