@@ -1,0 +1,144 @@
+{% extends 'rss/main.html' %}
+
+{% block style %}
+<style>
+    .rssMargin {
+        margin-top: 1px;
+        margin-left: 10px
+    }
+
+    .mobhide {
+        display: flex;
+    }
+
+    @media all and (max-width: 230px) {
+        .displayNone {
+            display: none;
+        }
+    }
+    @media all and (max-width: 580px) {
+        .mobhide {
+            display: none;
+        }
+        .inlineDisplay {
+            display: inline;
+        }
+        .noFlexBasic {
+            flex-basis: 0% !important;
+        }
+        .marginTop2 {
+            margin-top: 2px;
+        }       
+    }
+    @media all and (max-width: 980px) {
+        .noFlowFlex {
+            flex-flow: nowrap !important;
+        }   
+    }
+    
+</style>
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    {% if feed.feed.title %}
+        <a class="navbar-brand logo text-white mobhide" href="/"><span class="text-white">{{feed.feed.title}}</span></a>
+    {% else %}
+        <a class="navbar-brand logo text-white mobhide" href="/">RSS READER</a>
+    {% endif %}
+    <div class="collapse navbar-collapse noFlexBasic" id="navbarTogglerDemo03">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
+      <form class="form-inline my-2 my-lg-0 d-flex float-right noFlowFlex">
+        <input class="form-control mr-sm-2" type="text" placeholder="Link" name="url">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+</nav>
+
+<main class="page">
+    <section class="clean-block about-us">
+        {% if feed.feed.title %}
+        <div class="container">
+            <div class="row justify-content-center my-sm-3 marginTop2 displayNone">
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">  
+                    <div class="btn-group" role="group">
+                      <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Zoradiť podľa dátumu od
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <a class="dropdown-item" href="{% url 'ascending'%}">Najstarších</a>
+                        <a class="dropdown-item" href="{% url 'descending'%}">Najnovších</a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="row justify-content-center">
+            {% if feed.entries %}
+                {% for entry in feed.entries %}
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="card clean-card text-center border-0">
+                            {% if entry.enclosures.0.href %}
+                                <a href="{{ entry.link }}"  class="btn">
+                                    <img class="card-img-top w-100 d-block" alt="" src="{{ entry.enclosures.0.href }}" />
+                                </a>
+                                {% if entry.published %}
+                                    <p class="card-text">{{ entry.published }}</p>
+                                {% endif %}
+                            {% elif entry.media_content.0.url %}
+                                <a href="{{ entry.link }}"  class="btn">
+                                    <img class="card-img-top w-100 d-block" alt="" src="{{ entry.media_content.0.url }}" />
+                                </a>
+                                {% if entry.published %}
+                                    <p class="card-text">{{ entry.published }}</p>
+                                {% endif %}
+                            {% endif %}
+                            <div class="card-body info">
+                               <a href="{{ entry.link }}">
+                                    <h5 class="card-title text-dark">{{ entry.title }}</h5>
+                                </a>
+                                <p class="card-text">{{ entry.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %} 
+            </div> 
+        </div> 
+        {% else %}
+        <div class="container">
+            <div class="row justify-content-center">
+                <h2>Slovenské aj svetové RSS</h2>
+                <img class="d-block rssMargin" src="https://horami.sk/wp-content/uploads/2017/01/rss-40674__340.png" alt="" width="80" height="40"/>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-sm-6 col-lg-4 justify-content-center">
+                    <a href="http://127.0.0.1:8000/?url=https%3A%2F%2Fwww.sme.sk%2Frss-title"  class="btn">
+                        <img class="card-img-top w-100 d-block" alt="" src="https://u.smedata.sk/artemis/files/8/59/5978/sme-sk-logo.png" height="300"/>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-4 justify-content-center">
+                    <a href="http://127.0.0.1:8000/?url=http%3A%2F%2Fnewsrss.bbc.co.uk%2Frss%2Fnewsonline_uk_edition%2Ffront_page%2Frss.xml"  class="btn">
+                        <img class="card-img-top w-100 d-block" alt="" src="https://m.files.bbci.co.uk/modules/bbc-morph-news-waf-page-meta/2.5.2/bbc_news_logo.png" height="300"/>
+                    </a>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-sm-6 col-lg-4 justify-content-center">
+                    <a href="http://127.0.0.1:8000/?url=https%3A%2F%2Fdennikn.sk%2Fminuta%2Ffeed%2F%3Fcat%3D2386"  class="btn">
+                        <img class="card-img-top w-100 d-block" alt="" src="https://pbs.twimg.com/profile_images/554639121969184769/tQBa3Uap.png" height="300"/>
+                    </a>
+                </div>
+                <div class="col-sm-6 col-lg-4 justify-content-center">
+                    <a href="http://127.0.0.1:8000/?url=http%3A%2F%2Frss.cnn.com%2Frss%2Fedition.rss"  class="btn inlineDisplay">
+                        <img class="card-img-top w-100 d-block" alt="" src="https://cdn.cnn.com/cnn/.e1mo/img/4.0/logos/CNN_logo_400x400.png" height="300"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}  
+    </section>
+</main>
+{% endblock %}
