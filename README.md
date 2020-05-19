@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# rssReader
-=======
 # RSS READER
 
 Matej Glemba - Webové publikovanie - Projekt
